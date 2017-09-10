@@ -1,0 +1,89 @@
+---
+title: "607 -Assignment 2"
+author: "Munkhnaran Gankhuyag"
+date: "September 10, 2017"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+
+DataScienceisAwesome <-"Gatorade1"
+
+
+```
+
+
+```{r}
+library(RMySQL)
+library(dbConnect)
+library(gWidgets)
+
+con =dbConnect(MySQL(), user ='root', password = DataScienceisAwesome, dbname = 'superhero_movies', host ='localhost')
+```
+
+
+```{r}
+dbListTables(con) 
+```
+
+```{r}
+Movie_Query <- "select * from superhero_movies;"
+movies_superhero <- dbGetQuery(con,Movie_Query)
+```
+
+```{r}
+str(movies_superhero)
+summary(movies_superhero)
+```
+
+
+```{r}
+Deadpool_avg <- mean(movies_superhero$Deadpool, na.rm = T)
+Logan_avg <- mean(movies_superhero$Logan, na.rm = T)
+Amazingspiderman_avg <- mean(movies_superhero$Amazing_Spider_Man, na.rm = T)
+BvS_avg <- mean(movies_superhero$Batman_vs_Superman, na.rm = T)
+GOTG2_avg <- mean(movies_superhero$Gaurdians_of_the_Galaxy_2, na.rm = T)
+CA_CivilWar_avg <- mean(movies_superhero$Captain_America_Civil_War, na.rm = T)
+Spider_man_homecoming <- mean(movies_superhero$Spider_MAN_Home_Coming, na.rm = T)
+
+Averages <- data.frame(movies = c("Deadpool", "Logan", "Amazing Spider Man", "Batman vs Superman", "Gaurdians of the Galaxy 2","Captain America:Civil War", "Spider-man:Homecoming"),
+                      Avg =c(Deadpool_avg,Logan_avg,Amazingspiderman_avg,BvS_avg,GOTG2_avg,CA_CivilWar_avg,Spider_man_homecoming))
+
+```
+
+
+
+```{r}
+library(ggplot2)  #For plotting
+
+```
+
+
+```{r}
+ggplot(data = Averages, aes(x =movies, y =Avg, color = movies)) + 
+        geom_bar(stat = "identity", width = .8, fill = "white")
+```
+
+
+
+```{r}
+library(stringr)
+Averages$wrapmovies <- str_wrap(Averages$movies, width = 7)
+```
+
+```{r}
+Movie_Avg_Barplot <- ggplot(data = Averages, aes(x = wrapmovies, y =Avg, color = movies)) + 
+        geom_bar(stat = "identity", width = .8, fill = "white") +
+        labs(title = "Average Superhero Film Ratings ",
+        x = "Film Title", y ="Average Rating")
+
+  Movie_Avg_Barplot
+```
