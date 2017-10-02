@@ -1,0 +1,103 @@
+---
+title: "Week 5 Assignment"
+author: "Munkhnaran Gankhuyag"
+date: "September 30, 2017"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+arrivals_delays <- read.csv("arrival_delays_data.csv", header = TRUE, sep = ",")
+arrivals_delays
+```
+
+```{r}
+library(dplyr)
+library(tidyr)
+```
+
+```{r}
+arrivals_delays2 <- slice(arrivals_delays,c(1,2,4,5))
+arrivals_delays2
+```
+
+```{r}
+arrivals_delays2 <- data.frame(arrivals_delays2)
+tidy <- arrivals_delays2 %>% gather(key = city, value = stat,3:7)
+tidy <- data.frame(tidy)
+tidy$stat <-as.numeric(tidy$stat)
+tidy
+```
+
+```{r}
+colnames(tidy) <- c("airline","status","city","count")
+tidy$airline <- c("ALASKA","ALASKA","AM WEST","AM WEST","ALASKA","ALASKA","AM WEST","AM WEST","ALASKA","ALASKA","AM WEST","AM WEST","ALASKA","ALASKA","AM WEST","AM WEST","ALASKA","ALASKA","AM WEST","AM WEST")
+tidy
+```
+
+```{r}
+tidy_sort_by_city <- 
+  tidy %>% 
+  select(city,everything())
+tidy_sort_by_city
+```
+
+```{r}
+On_time_alaska <- filter(tidy_sort_by_city,status=='on time' & airline == 'ALASKA')
+On_time_am_west <- filter(tidy_sort_by_city,status=='on time' & airline == 'AM WEST')
+delayed_alaska <- filter(tidy_sort_by_city,status=='delayed' & airline == 'ALASKA')  
+delayed_am_west <- filter(tidy_sort_by_city,status=='delayed' & airline == 'AM WEST')
+
+On_time_alaska <-On_time_alaska[ ,c(1,4)]
+On_time_am_west <- On_time_am_west[ ,c(1,4)] 
+delayed_alaska <- delayed_alaska[ ,c(1,4)]
+delayed_am_west <- delayed_am_west[ ,c(1,4)]
+```
+
+```{r}
+colnames(On_time_alaska) <- c("city","ALASKA")
+colnames(On_time_am_west) <- c("city","AM West")
+colnames(delayed_alaska) <- c("city","ALASKA")
+colnames(delayed_am_west) <- c("city","AM West")
+```
+
+```{r}
+Alaska <- On_time_alaska
+Alaska$Delayed <- delayed_alaska$ALASKA
+Alaska$ALASKA <- as.numeric(Alaska$ALASKA)
+Alaska$Delayed <- as.numeric(Alaska$Delayed)
+Alaska$Total <- rowSums(Alaska[,2:3])
+Alaska$Percent_Delayed_Alaska <- round(((Alaska$Delayed/Alaska$Total)*100), 2)
+Alaska
+```
+
+```{r}
+AM_West <- On_time_am_west
+AM_West$Delayed <- delayed_am_west$`AM West`
+AM_West$`AM West` <- as.numeric(AM_West$`AM West`)
+AM_West$Delayed <- as.numeric(AM_West$Delayed)
+AM_West$Total <- rowSums(AM_West[,2:3])
+AM_West$Percent_Delayed_AM_West <- round(((AM_West$Delayed/AM_West$Total)*100), 2)
+AM_West
+```
+
+
+
+```{r}
+Percent_Delayed <- matrix(c(AM_West$Percent_Delayed_AM_West,Alaska$Percent_Delayed_Alaska), ncol = 2)
+rownames(Percent_Delayed) <- AM_West$city
+colnames(Percent_Delayed) <- c("AM_West", "Alaska")
+
+Percent_Delayed
+```
+
+
+
+```{r}
+barplot(Percent_Delayed, main = 'Percent of Flights Delayed by Airline',beside = T, col=c("red", "blue", "yellow","purple","green"),
+        legend= rownames(Percent_Delayed))
+
+```
+
+From the data we can see that AM West has a higher percentage of delays in every city.
