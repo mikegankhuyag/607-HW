@@ -1,0 +1,91 @@
+---
+title: "Assignment 7"
+author: "Munkhnaran Gankhuyag"
+date: "October 14, 2017"
+output: html_document
+---
+
+```{r}
+library(dbConnect)
+library(gWidgets)
+library(bitops)
+library(RCurl)
+library(jsonlite)
+library(XML)
+library(knitr)
+```
+
+I created my table in SQL and I connected through R.
+
+```{r}
+con =dbConnect(MySQL(), user ='root',  host = 'localhost',
+              dbname = 'CUNY')
+
+dbListTables(con)
+
+books <- "select * from books;"
+books1 <- dbGetQuery(con,books)
+
+```
+
+```{r}
+kable(books1)
+
+```
+
+First I converted my table in HTML format and uploaded in Github.
+
+```{r}
+library(tableHTML)
+tableHTML(books1)
+
+write_tableHTML(tableHTML(books1), file = "books.html")
+```
+
+Below is how structure of the table in hmtl format.
+
+```{r}
+books_html <- "https://raw.githubusercontent.com/mikegankhuyag/607-HW/master/books.html"
+
+books_html1 <- htmlParse(getURL(books_html))
+books_html1  
+
+```
+Below is the HMTL read as a table
+```{r}
+books_html2 <- readHTMLTable(books_html1)
+kable(books_html2)
+```
+
+XML was a little easier to understand, so I wrote the table below in the format.
+
+```{r}
+books_xml <- "https://raw.githubusercontent.com/mikegankhuyag/607-HW/master/Books_xml_final.xml"
+books_xml1 <- getURL(books_xml)
+books_xml2 <- xmlParse(books_xml1)
+books_xml2
+```
+
+Below is the XML language read as a table.
+
+```{r}
+books_xml_table <- xmlToDataFrame(books_xml2, stringsAsFactors = FALSE)
+kable(books_xml_table)
+```
+
+Below is the table written in JSN format.
+
+```{r}
+books_jsn <- getURL("https://raw.githubusercontent.com/mikegankhuyag/607-HW/master/Books.json.json")
+books_jsn
+books_jsn2 <- fromJSON(books_jsn)
+
+```
+
+Below is the JSN language read as a table.
+```{r}
+kable(books_jsn2)
+```
+
+Overall, I had a little trouble understanding HTML format. I used to play around with it back when Myspace was popular. I can see that JSN and XML are a lot more structured and easier to read. This was a great assignment to get a feel for the different languages.
+
