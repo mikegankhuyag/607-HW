@@ -1,0 +1,20 @@
+{"books" :[
+    {
+    "Title" : "Data Science for Business",
+    "Author" : "Foster Provost, Tom Fawcett",
+    "Year Published" : 2013,
+    "Category" : "Business",
+    },
+	 {
+    "Title" : "Data Science for Business",
+    "Author" : "Foster Provost, Tom Fawcett",
+    "Year Published" : 2015,
+    "Category" : "Statistics",
+    },
+	 {
+    "Title" : "R for Data Science",
+    "Author" : "Garrett Grolemund, Hadley Wickham",
+    "Year Published" : 2017,
+    "Category" : "Computer",
+    }]
+}
