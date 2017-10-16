@@ -1,0 +1,22 @@
+<Books>
+	<title>
+		<t1>Data Science for Business</t1>
+		<t2>OpenIntro Statistics</t2>
+		<t3>R for Data Science</t3>
+	</title>
+	<Author>
+		<A1>Foster Provost, Tom Fawcett</A1>
+		<A2>David M Diez, Christopher D Barr, Mine C¸ etinkaya-Rundel</A2>
+		<A3>Garrett Grolemund, Hadley Wickham</A3>
+	</Author>
+	<Year_Published>
+		<Y1>2013</Y1>
+		<Y2>2015</Y2>
+		<Y3>2017</Y3>
+	</Year_Published>
+	<Category>
+		<C1>Business</C1>
+		<C2>Statistics</C2>
+		<C3>Computer</C3>
+	</Category>
+</Books>
