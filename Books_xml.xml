@@ -3,18 +3,18 @@
 		<Title>Data Science for Business</Title>
 		<Author>Foster Provost, Tom Fawcett</Author>
 		<Year_Published>2013</Year_Published>
-		<Category>Business</category>
+		<Category>Business</Category>
 	</book>
 	<book category = "Data Science">
 		<Title>OpenIntro Statistics</Title>
 		<Author>David M Diez, Christopher D Barr, Mine C¸ etinkaya-Rundel</Author>
 		<Year_Published>2015</Year_Published>
-		<Category>Statistics</category>
+		<Category>Statistics</Category>
 	</book>
 	<book category = "Data Science">
 		<Title>R for Data Science</Title>
 		<Author>Garrett Grolemund, Hadley Wickham</Author>
 		<Year_Published>2017</Year_Published>
-		<Category>Computer</category>
+		<Category>Computer</Category>
 	</book>
 </Books>
