@@ -1,0 +1,42 @@
+---
+title: "Week 9 Assignment"
+author: "Munkhnaran Gankhuyag"
+date: "October 29, 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+library(jsonlite)
+library(httr)
+library(XML)
+library(knitr)
+```
+
+
+For my API I searched for all articles containing 'Obama' on 01/01/2012. Facet count will be returned for 'day_of_week' and will be reflective of all documents (i.e., the date range filter and filter query do not affect facet counts) and used the suggested URL example.
+
+```{r}
+Url <- 'http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=obama&facet_field=day_of_week&begin_date=20120101&end_date=20120101&api-key=5a5379a7e4fa4b37964e7a36920eccdb'
+Url
+```
+
+Since it is JSON document, I used the FromJSON function to read the information.
+
+```{r}
+Obama <- fromJSON(Url)
+Obama
+```
+```{r}
+Response <- data.frame(Obama$response)
+Response
+```
+
+
+
+
+
+
+
+
